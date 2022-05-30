@@ -33,6 +33,7 @@ default collate=utf8_unicode_ci;
 create table if not exists song_artists(
     artist_id int,
     song_id int,
+    UNIQUE(artist_id, song_id),
     CONSTRAINT fk__song_artists__artists FOREIGN KEY (artist_id) REFERENCES artists(artist_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk__song_artists__songs FOREIGN KEY (song_id) REFERENCES songs(song_id) ON DELETE CASCADE ON UPDATE CASCADE
 )engine=innodb 

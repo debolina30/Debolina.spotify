@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 
 import Select from "react-select";
 
 import Modal from "../components/shared/Modal";
 import { useState } from "react";
 import AddArtistSection from "./AddArtistSection";
+import Axios from "axios";
+import DataContext from "../contexts/DataContext";
+
+const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 export default function AddSongForm() {
   // Add artist modal
@@ -27,13 +31,54 @@ export default function AddSongForm() {
   ];
 
   const [songName, setSongName] = useState("");
-  const [dateReleased, setDateReleased] = useState();
-  const [coverImage, setCoverImage] = useState();
+  const [dateReleased, setDateReleased] = useState("");
+  const [coverImage, setCoverImage] = useState("");
   const [artists, setArtists] = useState([]);
+
+  const { artistsList, setArtistsList } = useContext(DataContext);
+
+  useEffect(() => {
+    if (!artistsList || artistsList.length === 0) {
+      Axios.get(SERVER_URL + "artists?filters=dob,bio").then((res) => {
+        setArtistsList(res.data);
+      });
+    }
+  });
+
+  const artistListToSelectOption = (artistsList) => {
+    return artistsList.map((a) => {
+      const b = {};
+      b.value = a.artist_id;
+      b.label = a.name;
+
+      return b;
+    });
+  };
+
+  const coverImageChangeHandler = (e) => {
+    setCoverImage(e.target.files[0]);
+  };
+
+  const SubmitHandler = (e) => {
+    e.preventDefault();
+
+    // Validate data
+
+    const formdata = new FormData();
+    formdata.append("song_name", songName);
+    formdata.append("release_date", dateReleased);
+    formdata.append("cover_image", coverImage);
+    formdata.append(
+      "artists_id_list",
+      artists.map((a) => a.value)
+    );
+
+    Axios.post(SERVER_URL + "songs", formdata).catch((err) => console.log(err));
+  };
 
   return (
     <div>
-      <form>
+      <form encType="multipart/form-data">
         <div className="input-group">
           <label htmlFor="song-name">Song name</label>
           <input
@@ -64,10 +109,7 @@ export default function AddSongForm() {
             type="file"
             accept=".png,.jpg,.jpeg"
             name="song-cover-image"
-            value={coverImage}
-            onChange={(e) => {
-              setCoverImage(e.target.value);
-            }}
+            onChange={coverImageChangeHandler}
           />
         </div>
 
@@ -76,7 +118,7 @@ export default function AddSongForm() {
             <label htmlFor="song-artists">Artists</label>
             <Select
               isMulti
-              options={options}
+              options={artistListToSelectOption(artistsList)}
               value={artists}
               onChange={(val) => {
                 setArtists(val);
@@ -87,7 +129,9 @@ export default function AddSongForm() {
             Add artist
           </button>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" onClick={SubmitHandler}>
+          Submit
+        </button>
       </form>
       <Modal
         name="add-artist"
