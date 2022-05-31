@@ -10,7 +10,8 @@ const AddSong = (songs, res) => {
         res.status(500).send({
           message: "Error! Song not created!",
         });
-        throw err;
+        console.log(err);
+        res.status(500).send();
       }
 
       // Populate song_artists table with necessary entries
@@ -23,7 +24,10 @@ const AddSong = (songs, res) => {
             if (err.errno !== 1062) {
               // Duplicate error;
               console.log("Duplicate error is disregarded");
-            } else throw err;
+            } else {
+              console.log(err);
+              res.status(500).send();
+            }
           }
         });
       });
@@ -43,7 +47,8 @@ const GetSong = (req, res) => {
       res.status(500).send({
         message: "Error!",
       });
-      throw err;
+      console.log(err);
+      res.status(500).send();
     }
 
     res.status(200).send(rows);
@@ -57,7 +62,10 @@ const RateSong = (song_id, user_id, rating, req, res) => {
       if (err.errno !== 1062) {
         // Duplicate error;
         console.log("Duplicate error is disregarded");
-      } else throw err;
+      } else {
+        console.log(err);
+        res.status(500).send();
+      }
     } else {
       res.status(200).send({ id: rows.insertId });
     }

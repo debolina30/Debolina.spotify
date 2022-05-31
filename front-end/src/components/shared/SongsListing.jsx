@@ -39,7 +39,11 @@ function SongItem({ song }) {
           navigate(0);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response.status === 403) {
+          window.alert("Login to Rate a song!");
+        } else console.log(err);
+      });
   };
   return (
     <div className="song-item card">
