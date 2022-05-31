@@ -18,6 +18,28 @@ export default function RegisterPage() {
       email,
       password,
     };
+
+    // Validation
+    if (name.trim().length === 0) {
+      window.alert("Name required!");
+      return;
+    } else if (email.trim().length === 0) {
+      window.alert("Email required!");
+      return;
+    } else if (
+      !email
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        )
+    ) {
+      window.alert("Email should be valid!");
+      return;
+    } else if (password.trim().length === 0) {
+      window.alert("Password required!");
+      return;
+    }
+
     Axios.post(SERVER_URL + "api/user/register", data)
       .then((res) => {
         if (res.status === 200) {
@@ -30,6 +52,7 @@ export default function RegisterPage() {
           window.alert("Email already registered!");
         }
       });
+    setPassword("");
   };
   return (
     <>

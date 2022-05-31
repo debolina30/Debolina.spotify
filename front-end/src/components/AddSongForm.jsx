@@ -57,7 +57,21 @@ export default function AddSongForm() {
   const SubmitHandler = (e) => {
     e.preventDefault();
 
-    // Validate data
+    // Validation
+
+    if (songName.trim().length === 0) {
+      window.alert("Song name required!");
+      return;
+    } else if (dateReleased.trim().length === 0) {
+      window.alert("Release date required!");
+      return;
+    } else if (!coverImage) {
+      window.alert("Cover Image required!");
+      return;
+    } else if (!artists || artists.length === 0) {
+      window.alert("Atleast one artist is required!");
+      return;
+    }
 
     const formdata = new FormData();
     formdata.append("song_name", songName);
@@ -68,9 +82,23 @@ export default function AddSongForm() {
       artists.map((a) => a.value)
     );
 
-    Axios.post(SERVER_URL + "api/songs", formdata, {
-      header: authHeader,
-    }).catch((err) => console.log(err));
+    Axios.post(SERVER_URL + "api/songs", formdata, authHeader())
+      .then((res) => {
+        if (res.status === 200) {
+          window.alert("Song added successfully!");
+          setSongName("");
+          setDateReleased("");
+          setCoverImage("");
+          setArtists([]);
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 403) {
+          window.alert("You must login to add a song");
+        } else {
+          console.log(err);
+        }
+      });
   };
 
   return (

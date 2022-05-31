@@ -9,7 +9,6 @@ const login = (email, password) => {
   })
     .then((res) => {
       if (res.status === 200) {
-        console.log(res.data.token);
         localStorage.setItem("user", res.data.token);
         return true;
       } else return false;

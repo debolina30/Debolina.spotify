@@ -23,9 +23,23 @@ router.get("/", authWithOutResponse, (req, res) => {
 });
 
 router.post("/", auth, upload.single("cover_image"), (req, res) => {
-  // Validation
-  const { song_name, release_date, artists_id_list } = req.body;
+  let { song_name, release_date, artists_id_list } = req.body;
   const cover_image = req.file;
+
+  //Validation
+  if (song_name.trim().length === 0) {
+    res.status(400).send();
+  } else if (release_date.trim().length === 0) {
+    res.status(400).send();
+  } else if (!cover_image) {
+    res.status(400).send();
+  } else if (!artists_id_list || artists_id_list.length === 0) {
+    res.status(400).send();
+  }
+
+  if (!Array.isArray(artists_id_list) && artists_id_list) {
+    artists_id_list = [artists_id_list];
+  }
 
   if (!req.file || !song_name || !release_date || !artists_id_list)
     res.sendStatus(400).send({ message: "Bad request!" });

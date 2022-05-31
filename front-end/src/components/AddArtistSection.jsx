@@ -14,7 +14,17 @@ export default function AddArtistSection() {
 
   const SubmitHandler = (e) => {
     e.preventDefault();
-    //Validate data
+    //validation
+    if (artistName.trim().length === 0) {
+      window.alert("Artist name required!");
+      return;
+    } else if (dob.trim().length === 0) {
+      window.alert("Date of birth required!");
+      return;
+    } else if (!bio) {
+      window.alert("Bio required!");
+      return;
+    }
 
     const data = {
       artist_name: artistName,
@@ -26,13 +36,15 @@ export default function AddArtistSection() {
       .then((res) => {
         if (res.status === 200) {
           if (res.data.newArtist) {
-            console.log(res.data.newArtist);
+            // console.log(res.data.newArtist);
             const newArtist = res.data.newArtist;
             delete newArtist.bio;
             delete newArtist.dob;
             setArtistsList((prev) => [...prev, newArtist]);
-          } else {
-            // Fetch for the entire artists
+
+            setArtistName("");
+            setDob("");
+            setBio("");
           }
         } else {
           window.alert("Something went wrong!");
@@ -55,6 +67,8 @@ export default function AddArtistSection() {
             onChange={(e) => {
               setArtistName(e.target.value);
             }}
+            required
+            placeholder="Name..."
           />
         </div>
 
@@ -67,6 +81,7 @@ export default function AddArtistSection() {
             onChange={(e) => {
               setDob(e.target.value);
             }}
+            required
           />
         </div>
 
@@ -80,6 +95,8 @@ export default function AddArtistSection() {
             onChange={(e) => {
               setBio(e.target.value);
             }}
+            required
+            placeholder="A short bio of the artist..."
           ></textarea>
         </div>
 

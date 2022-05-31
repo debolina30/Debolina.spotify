@@ -13,8 +13,24 @@ export default function LoginPage() {
 
     // Validation
 
+    if (email.trim().length === 0) {
+      window.alert("Email required!");
+      return;
+    } else if (
+      !email
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        )
+    ) {
+      window.alert("Email should be valid!");
+      return;
+    } else if (password.trim().length === 0) {
+      window.alert("Password required!");
+      return;
+    }
+
     login(email, password).then((res) => {
-      console.log(res);
       if (res) navigator("/");
     });
   };
