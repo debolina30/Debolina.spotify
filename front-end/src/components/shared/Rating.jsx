@@ -63,7 +63,7 @@ function Star({
   if (canCheck) {
     return (
       <span
-        className={"fa fa-star" + (checked ? " checked" : "")}
+        className={"pointer fa fa-star" + (checked ? " checked" : "")}
         onMouseEnter={() => mouseEnterHandler(id)}
         onClick={() => mouseClickHandler(id)}
       ></span>

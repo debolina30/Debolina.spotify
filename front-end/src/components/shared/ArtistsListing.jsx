@@ -3,11 +3,13 @@ import Rating from "./Rating";
 export default function ArtistsListing({ artists }) {
   return (
     <div className="artists-listing">
-      {artists &&
-        artists.length > 0 &&
+      {artists && artists.length > 0 ? (
         artists.map((artist, id) => {
           return <ArtistItem key={id} artist={artist} />;
-        })}
+        })
+      ) : (
+        <>No artists available</>
+      )}
     </div>
   );
 }

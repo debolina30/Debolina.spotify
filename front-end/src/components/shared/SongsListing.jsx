@@ -10,11 +10,13 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 export default function SongsListing({ songs }) {
   return (
     <div className="songs-listing">
-      {songs &&
-        songs.length > 0 &&
+      {songs && songs.length > 0 ? (
         songs.map((song, id) => {
           return <SongItem key={id} song={song} />;
-        })}
+        })
+      ) : (
+        <>No songs available</>
+      )}
     </div>
   );
 }
