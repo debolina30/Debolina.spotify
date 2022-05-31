@@ -16,7 +16,7 @@ Database : MySQL ver 8.0
 
 - Create a new database and Initialize the tables with these sql queries
 
-  ```
+  ```SQL
   create table if not exists users(
     user_id int NOT NULL AUTO_INCREMENT,
     name varchar(70) NOT NULL,
@@ -71,39 +71,37 @@ Database : MySQL ver 8.0
   )engine=innodb
   default charset=utf8
   default collate=utf8_unicode_ci;
-
   ```
 
 
 - Create a `.env` at `\server\` and configure it with these values
 
-      ```
+    ```Shell
       PORT = 5000
       DB_HOST = "localhost"
       DB_USER = "your_db_user"
       DB_PASS = "your_db_password"
       DB_NAME = "your_db_name"
       JWT_TOKEN_SECRET = "random_token_here"
-
-      ```
+    ```
 - Open a terminal and run these commands to start the server
-      ```
+  ```Shell
       cd /server
       npm i
       npm start
-      ```
+  ```
 
 - Open another instance of terminal and run these commands to start the front end
 
-      ```
+    ```Shell
       cd /front-end
       npm i
       npm start
-      ```
+    ```
 
 - For mock data run these SQL queries
 
-      ```
+     ```
       Work in progress
 
-      ```
+     ```
