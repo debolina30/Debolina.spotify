@@ -22,8 +22,12 @@ function ArtistItem({ artist }) {
         <div className="artist-dob">
           Date of birth: {FormatDate(artist.dob)}
         </div>
-        <div className="artist-bio">Bio: {artist.bio}</div>
-        <div className="artist-songs">Songs: {artist.songs || "NaN"}</div>
+        <div className="artist-bio faded"> {artist.bio}</div>
+        <div className="artist-songs">
+          <br />
+          Songs <br /> <span className="faded">{artist.songs || "NaN"}</span>
+          <br />
+        </div>
       </div>
 
       <div className="artist-average-rating">

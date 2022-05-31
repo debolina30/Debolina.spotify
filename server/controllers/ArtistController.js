@@ -8,7 +8,9 @@ const AddArtist = (artist, res) => {
       res.status(500).send({
         message: "Error! Artists not created!",
       });
-      throw err;
+      console.log(err);
+      res.status(500).send();
+      return;
     }
 
     sql = "SELECT * FROM artists WHERE artist_id = " + rows.insertId;
@@ -46,8 +48,8 @@ const GetArtists = (req, res) => {
   } FROM artists`;
   db.query(sql, (err, rows) => {
     if (err) {
-      res.status(500);
-      throw err;
+      console.log(err);
+      res.status(500).send();
     }
     res.status(200).send(rows);
   });
@@ -57,8 +59,8 @@ const GetTopTenArtists = (req, res) => {
   let sql = `SELECT artists.*, GROUP_CONCAT(SAVG.name SEPARATOR ', ' ) AS "songs", ROUND(AVG(SAVG.rating_value)) as "avg_rating" FROM artists LEFT JOIN song_artists ON artists.artist_id = song_artists.artist_id LEFT JOIN (SELECT songs.song_id, songs.name, AVG(rating_value) AS rating_value FROM songs LEFT JOIN ratings ON ratings.song_id = songs.song_id GROUP BY songs.song_id) AS SAVG ON SAVG.song_id = song_artists.song_id GROUP BY artists.artist_id ORDER BY avg_rating DESC LIMIT 10;`;
   db.query(sql, (err, rows) => {
     if (err) {
-      res.status(500);
-      throw err;
+      console.log(err);
+      res.status(500).send();
     }
     res.status(200).send(rows);
   });

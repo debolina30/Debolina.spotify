@@ -7,19 +7,31 @@ const CreateUser = (user, res) => {
   const saltRounds = 10;
   let sql = "SELECT * FROM users WHERE email=?";
   db.query(sql, [user.email], (err, rows) => {
-    if (err) throw err;
+    if (err) {
+      console.log(err);
+      res.status(500).send();
+    }
     if (rows && rows.length > 0) {
       res.status(409).send({ message: "User already exist!" });
     } else {
       bcrypt.genSalt(saltRounds, function (err, salt) {
-        if (err) throw err;
+        if (err) {
+          console.log(err);
+          res.status(500).send();
+        }
         bcrypt.hash(user.password, salt, function (err, hash) {
-          if (err) throw err;
+          if (err) {
+            console.log(err);
+            res.status(500).send();
+          }
 
           sql =
             "INSERT INTO users (name, email, hashed_password) VALUES (?,?,?);";
           db.query(sql, [user.name, user.email, hash], (err, rows) => {
-            if (err) throw err;
+            if (err) {
+              console.log(err);
+              res.status(500).send();
+            }
             res.status(200).send("Created user!");
           });
         });
@@ -31,7 +43,10 @@ const CreateUser = (user, res) => {
 const LoginUser = (user, res) => {
   let sql = "SELECT * FROM users WHERE email = ?;";
   db.query(sql, [user.email], (err, rows) => {
-    if (err) throw err;
+    if (err) {
+      console.log(err);
+      res.status(500).send();
+    }
 
     console.log(rows);
     if (rows && rows.length != 0) {
@@ -40,7 +55,10 @@ const LoginUser = (user, res) => {
         user.password,
         originalUser.hashed_password,
         (err, result) => {
-          if (err) throw err;
+          if (err) {
+            console.log(err);
+            res.status(500).send();
+          }
 
           if (result === true) {
             const token = jwt.sign(

@@ -18,7 +18,6 @@ export default function Rating({
 
   const HandleMouseClick = (id) => {
     submitRateHandler(id + 1); //Submitting the rate
-    console.log(id + 1);
   };
   const StarsToDisplay = () => {
     const stars = [];
