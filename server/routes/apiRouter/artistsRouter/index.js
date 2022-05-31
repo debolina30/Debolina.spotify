@@ -1,12 +1,17 @@
 const {
   AddArtist,
   GetArtists,
+  GetTopTenArtists,
 } = require("../../../controllers/ArtistController");
 
 const router = require("express").Router();
 
 router.get("/", (req, res) => {
-  GetArtists(req, res);
+  if (req.query.top_ten == "true") {
+    GetTopTenArtists(req, res);
+  } else {
+    GetArtists(req, res);
+  }
 });
 
 router.post("/", (req, res) => {

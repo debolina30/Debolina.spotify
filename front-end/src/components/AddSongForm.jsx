@@ -7,6 +7,7 @@ import { useState } from "react";
 import AddArtistSection from "./AddArtistSection";
 import Axios from "axios";
 import DataContext from "../contexts/DataContext";
+import { authHeader } from "../services/Auth";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -24,12 +25,6 @@ export default function AddSongForm() {
   };
 
   // Add songs
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
-
   const [songName, setSongName] = useState("");
   const [dateReleased, setDateReleased] = useState("");
   const [coverImage, setCoverImage] = useState("");
@@ -39,7 +34,7 @@ export default function AddSongForm() {
 
   useEffect(() => {
     if (!artistsList || artistsList.length === 0) {
-      Axios.get(SERVER_URL + "artists?filters=dob,bio").then((res) => {
+      Axios.get(SERVER_URL + "api/artists?filters=dob,bio").then((res) => {
         setArtistsList(res.data);
       });
     }
@@ -73,7 +68,9 @@ export default function AddSongForm() {
       artists.map((a) => a.value)
     );
 
-    Axios.post(SERVER_URL + "songs", formdata).catch((err) => console.log(err));
+    Axios.post(SERVER_URL + "api/songs", formdata, {
+      header: authHeader,
+    }).catch((err) => console.log(err));
   };
 
   return (

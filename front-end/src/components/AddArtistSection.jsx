@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Axios from "axios";
+
+import DataContext from "../contexts/DataContext";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -7,6 +9,8 @@ export default function AddArtistSection() {
   const [artistName, setArtistName] = useState("");
   const [dob, setDob] = useState("");
   const [bio, setBio] = useState("");
+
+  const { setArtistsList } = useContext(DataContext);
 
   const SubmitHandler = (e) => {
     e.preventDefault();
@@ -17,13 +21,16 @@ export default function AddArtistSection() {
       artist_dob: dob,
       artist_bio: bio,
     };
-    console.log(typeof data.artist_dob);
 
-    Axios.post(SERVER_URL + "artists", data)
+    Axios.post(SERVER_URL + "api/artists", data)
       .then((res) => {
         if (res.status === 200) {
           if (res.data.newArtist) {
-            // Add the new artists to the artists context
+            console.log(res.data.newArtist);
+            const newArtist = res.data.newArtist;
+            delete newArtist.bio;
+            delete newArtist.dob;
+            setArtistsList((prev) => [...prev, newArtist]);
           } else {
             // Fetch for the entire artists
           }
@@ -34,7 +41,6 @@ export default function AddArtistSection() {
       .catch(() => {
         window.alert("Something went wrong!");
       });
-    console.log(SERVER_URL + "artists", JSON.stringify(data));
   };
 
   return (

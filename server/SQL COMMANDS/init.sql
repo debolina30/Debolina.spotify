@@ -47,6 +47,7 @@ create table if not exists ratings(
     user_id int,
     rating_value int CHECK (rating_value >= 1 AND rating_value <= 5),
 
+    UNIQUE(song_id, user_id),
     PRIMARY KEY (rating_id),
     CONSTRAINT fk__ratings__users FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk__ratings__songs FOREIGN KEY (song_id) REFERENCES songs(song_id) ON DELETE CASCADE ON UPDATE CASCADE
