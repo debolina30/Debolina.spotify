@@ -1,10 +1,5 @@
 import Rating from "./Rating";
 
-import Axios from "axios";
-// import { authHeader } from "../../services/Auth";
-// import { useNavigate } from "react-router-dom";
-// const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-
 export default function ArtistsListing({ artists }) {
   return (
     <div className="artists-listing">
@@ -18,18 +13,19 @@ export default function ArtistsListing({ artists }) {
 }
 
 function ArtistItem({ artist }) {
-  //   const navigate = useNavigate();
-
   return (
-    <div className="artist-item">
-      <div className="artist-name">Artist name: {artist.name}</div>
-      <div className="artist-dob">Date of birth: {FormatDate(artist.dob)}</div>
-      <div className="artist-bio">Bio: {artist.bio}</div>
-      <div className="artist-songs">Songs: {artist.songs || "NaN"}</div>
+    <div className="artist-item card">
+      <div className="artists-text">
+        <h3 className="artist-name">{artist.name}</h3>
+        <div className="artist-dob">
+          Date of birth: {FormatDate(artist.dob)}
+        </div>
+        <div className="artist-bio">Bio: {artist.bio}</div>
+        <div className="artist-songs">Songs: {artist.songs || "NaN"}</div>
+      </div>
 
       <div className="artist-average-rating">
-        Average rating :
-        <Rating rating={artist.avg_rating || 0} />
+        Average rating : <Rating rating={artist.avg_rating || 0} />
       </div>
     </div>
   );

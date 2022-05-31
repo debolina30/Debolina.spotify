@@ -39,7 +39,7 @@ export default function RegisterPage() {
           <div className="input-group">
             <label htmlFor="name">Name</label>
             <input
-              type="name"
+              type="text"
               name="name"
               value={name}
               onChange={(e) => {

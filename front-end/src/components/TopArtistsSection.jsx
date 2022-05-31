@@ -19,7 +19,7 @@ export default function TopArtistsSection() {
   });
   return (
     <section>
-      <h2>Top 10 Songs</h2>
+      <h2>Top 10 Artists</h2>
       <ArtistsListing artists={topArtists} />
     </section>
   );

@@ -8,13 +8,15 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
 import LogoutPage from "./pages/LogoutPage";
+import Header from "./components/Header";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App container ">
       <Router>
         <DataContextProvider>
-          <Routes>
+          <Header />
+          <Routes className="container">
             <Route element={<HomePage />} path="/" exact />
             <Route element={<AddSongPage />} path="/add-song" />
             <Route element={<LoginPage />} path="/login" />

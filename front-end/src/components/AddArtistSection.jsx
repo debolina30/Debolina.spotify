@@ -83,12 +83,9 @@ export default function AddArtistSection() {
           ></textarea>
         </div>
 
-        <div className="buttons-horizontal">
-          <button>Cancel</button>
-          <button type="submit" onClick={SubmitHandler}>
-            Done
-          </button>
-        </div>
+        <button type="submit" onClick={SubmitHandler}>
+          Done
+        </button>
       </form>
     </section>
   );

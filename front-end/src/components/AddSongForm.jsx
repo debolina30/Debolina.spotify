@@ -74,12 +74,13 @@ export default function AddSongForm() {
   };
 
   return (
-    <div>
+    <>
       <form encType="multipart/form-data">
         <div className="input-group">
           <label htmlFor="song-name">Song name</label>
           <input
             type="text"
+            className="form-control"
             name="song-name"
             value={songName}
             onChange={(e) => {
@@ -114,6 +115,7 @@ export default function AddSongForm() {
           <div className="input-group">
             <label htmlFor="song-artists">Artists</label>
             <Select
+              className="input-select"
               isMulti
               options={artistListToSelectOption(artistsList)}
               value={artists}
@@ -137,6 +139,6 @@ export default function AddSongForm() {
       >
         <AddArtistSection />
       </Modal>
-    </div>
+    </>
   );
 }

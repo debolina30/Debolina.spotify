@@ -1,7 +1,8 @@
-.checked {
+.checked{
     color: orange;
-  }
+}
+
 
 .rating .rating-stars{
-    color: gray;
+    color: rgb(172, 172, 172);
 }

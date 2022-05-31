@@ -3,6 +3,8 @@ import Rating from "./Rating";
 import Axios from "axios";
 import { authHeader } from "../../services/Auth";
 import { useNavigate } from "react-router-dom";
+
+import "../styles/songsListing.css";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 export default function SongsListing({ songs }) {
@@ -38,30 +40,33 @@ function SongItem({ song }) {
       .catch((err) => console.log(err));
   };
   return (
-    <div className="song-item">
-      <div className="song-name">Song name: {song.name}</div>
-      <div className="song-release-date">
-        Release date: {FormatDate(song.release_date)}
-      </div>
+    <div className="song-item card">
       <div className="song-cover-image">
         <img
           src={FormatCoverImage(song.cover_image_path)}
           alt={song.name + "Cover image"}
         />
       </div>
-      <div className="song-artists">Artists: {song.artists || "NaN"}</div>
-
-      <div className="song-average-rating">
-        Average rating :
-        <Rating rating={song.avg_rating || 0} />
+      <div className="song-text">
+        <h3 className="song-name">{song.name}</h3>
+        <div className="song-release-date faded">
+          Release date: {FormatDate(song.release_date)}
+        </div>
+        <div className="song-artists">Artists: {song.artists || "NaN"}</div>
       </div>
-      <div className="song-user-rating">
-        User rating :
-        <Rating
-          rating={song.user_rating || 0}
-          canRate={song.user_rating == null ? true : false}
-          submitRateHandler={UserRateSubmitHandler}
-        />
+      <div className="song-ratings">
+        <div className="song-average-rating">
+          Average rating :
+          <Rating rating={song.avg_rating || 0} />
+        </div>
+        <div className="song-user-rating">
+          User rating :
+          <Rating
+            rating={song.user_rating || 0}
+            canRate={song.user_rating == null ? true : false}
+            submitRateHandler={UserRateSubmitHandler}
+          />
+        </div>
       </div>
     </div>
   );
