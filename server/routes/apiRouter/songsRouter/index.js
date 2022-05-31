@@ -37,8 +37,8 @@ router.post("/", auth, upload.single("cover_image"), (req, res) => {
     res.status(400).send();
   }
 
-  if (!Array.isArray(artists_id_list) && artists_id_list) {
-    artists_id_list = [artists_id_list];
+  if (artists_id_list) {
+    artists_id_list = artists_id_list.split(",");
   }
 
   if (!req.file || !song_name || !release_date || !artists_id_list)
