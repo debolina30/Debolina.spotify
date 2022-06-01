@@ -81,7 +81,7 @@ Database : MySQL ver 8.0
     DB_USER = "your_db_user"
     DB_PASS = "your_db_password"
     DB_NAME = "your_db_name"
-    JWT_TOKEN_SECRET = "random_token_here"
+    JWT_TOKEN_SECRET = "random_string_here"
   ```
 
 - Open a terminal and run these commands to start the server
