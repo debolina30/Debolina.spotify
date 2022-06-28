@@ -1,22 +1,3 @@
-# Spotify Like App
-
-This is a spotify like website created as part of a job interview assignment ([Here](https://docs.google.com/document/d/1JYi4kgnlUHGxuY-f4aLsyJdh2ruuskFwKHMcD3knPjU/edit?usp=sharing "Here"))
-
-Front end : React
-<br/>
-Back end : Node with Express
-<br/>
-Database : MySQL ver 8.0
-
----
-
-## Instructions to install
-
-- Clone the repo to your system and cd to the root of the repo
-
-- Create a new database and Initialize the tables with these sql queries
-
-  ```SQL
   create table if not exists users(
     user_id int NOT NULL AUTO_INCREMENT,
     name varchar(70) NOT NULL,
